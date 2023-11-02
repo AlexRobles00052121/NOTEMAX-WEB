@@ -1,0 +1,24 @@
+.login-registrer{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: bisque;
+}
+
+.container-form{
+    background: red;
+    width: 30%;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.my-form{
+    width: 100%;
+    display: flex;
+    padding: 1rem;
+    flex-direction: column;
+}
