@@ -11,7 +11,12 @@ export function Login() {
 
     const handleLogin = () => {
         if (username === 'usuario' && password === 'contraseña') {
-            // Si las credenciales son válidas, redirige al usuario a la página principal
+            const userData={
+                name : username,
+                password : password
+            }
+            localStorage.setItem('user', JSON.stringify(userData));
+            
             navigate('/principal');
         }
     };

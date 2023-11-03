@@ -1,13 +1,10 @@
-import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from "react-router-dom";
 
-function PrivateRoute({ element: Element, isAuthenticated, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      element={isAuthenticated ? <Element /> : <Navigate to="/" replace />}
-    />
-  );
+function PrivateRoute({canActivate, redirectPath = '/'}) {
+  if(!canActivate){
+    return <Navigate to = {redirectPath} replace/>
+  }
+  return <Outlet/>
 }
 
 export default PrivateRoute;
