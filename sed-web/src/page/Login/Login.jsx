@@ -1,5 +1,6 @@
 import  InputField from '../../components/Labels/InputFields'
 import '../AuthStyle.css'
+import { Link } from 'react-router-dom';
 
 export function Login() {
 
@@ -35,6 +36,7 @@ export function Login() {
                     value="Log in"
                 >
                 </InputField>
+                    <p>Don't have an account? <Link className='navLogin' to="/registrer">Registrarse</Link></p> 
             </div>
         </section>
     )

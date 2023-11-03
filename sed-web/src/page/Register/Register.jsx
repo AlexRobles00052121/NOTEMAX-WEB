@@ -1,5 +1,6 @@
 import '../AuthStyle.css'
 import InputField from '../../components/Labels/InputFields';
+import { Link } from 'react-router-dom';
 export function Registrer() {
     return (
         <section className='login-registrer'>
@@ -47,6 +48,8 @@ export function Registrer() {
                     value="submit"
                 >
                 </InputField>
+                <p>Already have and acount?<Link className='navLogin' to="/">Iniciar sesion</Link></p>
+                
             </div>
         </section>
     )

@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
 
-.login-registrer{
+.login-registrer {
     width: 100%;
     min-height: 100vh;
     display: flex;
@@ -9,14 +9,14 @@
     background-color: #F4CE47;
 }
 
-.title-form{
+.title-form {
     font-family: 'Kavoon';
     font-size: 2rem;
     color: #eee;
     margin-bottom: 1rem;
 }
 
-.container-form{
+.container-form {
     background: #000;
     width: 30%;
     padding: 2rem;
@@ -24,10 +24,10 @@
     align-items: center;
     flex-direction: column;
     border-radius: 20px;
-    box-shadow: 0 5px 10px 0 rgba(0,0,0,5);
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 5);
 }
 
-.my-form{
+.my-form {
     width: 100%;
     display: flex;
     padding: 1rem;
@@ -36,3 +36,20 @@
     font-family: 'Hammersmith One', sans-serif;
 }
 
+p {
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px 20px;
+    font-family: 'Hammersmith One', sans-serif;
+}
+
+.navLogin {
+    color: #0a7ffc;
+    text-decoration: none;
+    padding: 0.5rem;
+}
+
+.navLogin:hover {
+    text-decoration: underline;
+}
