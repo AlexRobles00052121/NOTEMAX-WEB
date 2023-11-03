@@ -1,5 +1,5 @@
 import '../AuthStyle.css'
-import InputField from '../../components/labels/InputFields';
+import InputField from '../../components/Labels/InputFields';
 export function Registrer() {
     return (
         <section className='login-registrer'>

@@ -1,24 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
+
 .login-registrer{
     width: 100%;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: bisque;
+    background-color: #F4CE47;
+}
+
+.title-form{
+    font-family: 'Kavoon';
+    font-size: 2rem;
+    color: #eee;
+    margin-bottom: 1rem;
 }
 
 .container-form{
-    background: red;
+    background: #000;
     width: 30%;
     padding: 2rem;
     display: flex;
     align-items: center;
     flex-direction: column;
+    border-radius: 20px;
 }
 
 .my-form{
     width: 100%;
     display: flex;
     padding: 1rem;
+    color: #eee;
     flex-direction: column;
+    font-family: 'Hammersmith One', sans-serif;
 }
+

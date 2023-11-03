@@ -1,4 +1,4 @@
-import { InputField } from "../../components/labels/InputFields";
+import  InputField from '../../components/Labels/InputFields'
 import '../AuthStyle.css'
 
 export function Login() {
@@ -6,12 +6,13 @@ export function Login() {
     return (
         <section className='login-registrer'>
             <div className="container-form">
+                <h1 className='title-form'>NoteMax</h1>
                 <form className='my-form'>
                     <InputField
                         type="text"
                         id="1"
                         name="Username"
-                        placeholder="your Username..."
+                        placeholder="Your Username..."
                     >
                         Submit your username:
                     </InputField>
@@ -31,7 +32,7 @@ export function Login() {
                     type="submit"
                     id="2"
                     name="submit"
-                    value="Submit"
+                    value="Log in"
                 >
                 </InputField>
             </div>
