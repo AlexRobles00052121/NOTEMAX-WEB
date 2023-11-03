@@ -10,14 +10,11 @@ function App() {
   return (
 
     <Router>
-
-    <Routes>
-      <Route path='/' element={<Login/>} />
-      <Route path='/registrer' element={<Registrer/>} />
-      <Route path='/principal' element={<InApp/>} />
-    </Routes>
-
-
+      <Routes>
+        <Route index element={<Login />} />
+        <Route path='/registrer' element={<Registrer />} />
+        <Route path='/principal' element={<InApp />} />
+      </Routes>
     </Router>
 
   )
