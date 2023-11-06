@@ -1,8 +1,25 @@
-import  InputField from '../../components/Labels/InputFields'
+import InputField from '../../components/Labels/InputFields'
 import '../AuthStyle.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export function Login() {
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleLogin = () => {
+        if (username === 'usuario' && password === 'password') {
+            const userData={
+                name : username,
+                password : password
+            }
+            localStorage.setItem('user', JSON.stringify(userData));
+            
+            navigate('/principal');
+        }
+    };
 
     return (
         <section className='login-registrer'>
@@ -14,8 +31,10 @@ export function Login() {
                         id="1"
                         name="Username"
                         placeholder="Your Username..."
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     >
-                        Submit your username:
+                        Username:
                     </InputField>
 
                     <InputField
@@ -23,9 +42,11 @@ export function Login() {
                         id="2"
                         name="Password"
                         placeholder="Your Password..."
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
 
                     >
-                        Submit your Password:
+                        Password:
                     </InputField>
                 </form>
 
@@ -34,9 +55,10 @@ export function Login() {
                     id="2"
                     name="submit"
                     value="Log in"
+                    onClick={handleLogin}
                 >
                 </InputField>
-                    <p>Don't have an account? <Link className='navLogin' to="/registrer">Registrarse</Link></p> 
+                <p>Don't have an account? <Link className='navLogin' to="/registrer">Registrarse</Link></p>
             </div>
         </section>
     )
