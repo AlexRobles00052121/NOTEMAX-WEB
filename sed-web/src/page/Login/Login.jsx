@@ -10,7 +10,7 @@ export function Login() {
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        if (username === 'usuario' && password === 'contraseña') {
+        if (username === 'usuario' && password === 'password') {
             const userData={
                 name : username,
                 password : password
@@ -34,7 +34,7 @@ export function Login() {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     >
-                        Submit your username:
+                        Username:
                     </InputField>
 
                     <InputField
@@ -46,7 +46,7 @@ export function Login() {
                         onChange={(e) => setPassword(e.target.value)}
 
                     >
-                        Submit your Password:
+                        Password:
                     </InputField>
                 </form>
 

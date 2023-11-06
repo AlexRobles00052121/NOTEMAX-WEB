@@ -6,6 +6,7 @@ export function Registrer() {
         <section className='login-registrer'>
             <div className='container-form' >
                 <form className='my-form'>
+                    <h1 className='title-form'>NoteMax</h1>
                     <InputField
                         type="text"
                         id="5"
@@ -45,7 +46,7 @@ export function Registrer() {
                     type="submit"
                     id="9"
                     name="submit"
-                    value="submit"
+                    value="Register"
                 >
                 </InputField>
                 <p>Already have and acount?<Link className='navLogin' to="/">Iniciar sesion</Link></p>
