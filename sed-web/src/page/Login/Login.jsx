@@ -10,7 +10,7 @@ export function Login() {
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        if (username === 'usuario' && password === 'password') {
+        if (username === 'user' && password === 'password') {
             const userData={
                 name : username,
                 password : password

@@ -12,6 +12,16 @@ section{
         justify-content: center;
 
         
+        .form-input{
+            border: none;
+            font-family: 'HammerSmith One';
+            width: 300px;
+            margin-bottom: 1rem;
+            height: 40px;
+            padding: 8px 10px;
+            background-color: $color-secondary;
+            border-radius: 10px;
+        }
 
         textarea{
             width: 900px;
