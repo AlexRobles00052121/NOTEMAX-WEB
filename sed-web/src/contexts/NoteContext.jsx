@@ -13,6 +13,7 @@ function NoteContextProvider(props) {
             {
                 id: keyId,
                 title: note.title,
+                type: note.type,
                 description: note.description,
             },
         ]);

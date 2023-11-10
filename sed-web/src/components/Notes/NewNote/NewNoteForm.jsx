@@ -7,11 +7,14 @@ import { NoteContext } from "../../../contexts/NoteContext";
 function NewNoteForm() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [type, setType] = useState("");
 
     const { keyId, setKeyId, CreateNote } = useContext(NoteContext);
+
     const handleCleanupClick = () => {
         setDescription("");
         setTitle("");
+        setType("");
     }
 
     const handleSubmit = (e) => {
@@ -19,10 +22,12 @@ function NewNoteForm() {
         CreateNote({
             id: setKeyId(keyId + 1),
             title,
+            type,
             description,
         });
         setTitle("");
         setDescription("");
+        setType("");
     };
 
     return (
@@ -37,10 +42,20 @@ function NewNoteForm() {
                             value={title}
                             required
                         />
-                        <textarea 
+                        <select
+                            className={classes["note__select"]}
+                            onChange={(e) => setType(e.target.value)}
+                            value={type}>
+                            <option defaultValue="" selected  > Select a type for your note</option>
+                            <option defaultValue="value1">Reminders</option>
+                            <option defaultValue="value2">Social</option>
+                            <option defaultValue="value3">Math</option>
+                            <option defaultValue="value4">Science</option>
+                        </select>
+                        <textarea
                             className={classes["form-textarea"]}
                             placeholder="Write your note here..."
-                            value={description} 
+                            value={description}
                             onChange={(e) => setDescription(e.target.value)}
                         />
 
