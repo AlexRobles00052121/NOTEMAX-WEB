@@ -58,7 +58,7 @@ export function Login() {
                     onClick={handleLogin}
                 >
                 </InputField>
-                <p>Don't have an account? <Link className='navLogin' to="/registrer">Registrarse</Link></p>
+                <p>Don&rsquo;t have an account? <Link className='navLogin' to="/registrer">Registrarse</Link></p>
             </div>
         </section>
     )
