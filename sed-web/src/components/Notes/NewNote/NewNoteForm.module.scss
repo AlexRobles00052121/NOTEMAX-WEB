@@ -12,6 +12,25 @@ section{
         justify-content: center;
 
         
+        .form-input{
+            border: none;
+            font-family: 'HammerSmith One';
+            width: 300px;
+            margin-bottom: 1rem;
+            height: 40px;
+            padding: 8px 10px;
+            background-color: $color-secondary;
+            border-radius: 10px;
+        }
+
+        .note__select{
+            margin-bottom: 10px;
+            font-family: 'HammerSmith One';
+            border-radius: 5px;
+            border: none;
+            padding:2px 5px;
+            background-color: $color-secondary;
+        }
 
         textarea{
             width: 900px;
@@ -19,7 +38,7 @@ section{
             padding: 8px 10px;
             margin-bottom: 1rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
             font-size: 1rem;
             font-family: 'Kavoon';
             font-weight: 400;

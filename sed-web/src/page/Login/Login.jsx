@@ -10,7 +10,7 @@ export function Login() {
     const navigate = useNavigate();
 
     const handleLogin = () => {
-        if (username === 'usuario' && password === 'password') {
+        if (username === 'user' && password === 'password') {
             const userData={
                 name : username,
                 password : password
@@ -58,7 +58,7 @@ export function Login() {
                     onClick={handleLogin}
                 >
                 </InputField>
-                <p>Don't have an account? <Link className='navLogin' to="/registrer">Registrarse</Link></p>
+                <p>Don&rsquo;t have an account? <Link className='navLogin' to="/registrer">Registrarse</Link></p>
             </div>
         </section>
     )
