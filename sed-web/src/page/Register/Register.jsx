@@ -30,7 +30,7 @@ export function Registrer() {
         })
             .then(response => {
                 if (response.status === 200) {
-                    navigate('/login')
+                    navigate('/')
                 } else {
                     navigate('/registrer')
                 }
@@ -41,7 +41,6 @@ export function Registrer() {
             })
 
     }
-
 
     return (
         <section className='login-registrer'>
@@ -100,14 +99,16 @@ export function Registrer() {
                         Phone number
                     </InputField>
 
+                    <InputField
+                        type="submit"
+                        id="9"
+                        name="submit"
+                        value="Register"
+                    >
+                    </InputField>
+
                 </form>
-                <InputField
-                    type="submit"
-                    id="9"
-                    name="submit"
-                    value="Register"
-                >
-                </InputField>
+
                 <p>Already have and acount?<Link className='navLogin' to="/">Iniciar sesion</Link></p>
 
             </div>

@@ -24,7 +24,7 @@ export function Login() {
 
         e.preventDefault();
         const userData = {
-            name: username,
+            user: username,
             password: password
         }
 
