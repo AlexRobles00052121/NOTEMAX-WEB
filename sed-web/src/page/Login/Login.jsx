@@ -36,7 +36,7 @@ export function Login() {
             .then(response => response.json())
             .then(result => { 
                 if (result.token) {
-                    console.log(parseJwt(result.token))
+                    //console.log(parseJwt(result.token))
                     localStorage.setItem('token', result.token)
                     setloginSuccessful('true')
                     navigate('/principal')
