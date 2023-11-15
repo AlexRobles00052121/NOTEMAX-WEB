@@ -1,26 +1,13 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import classes from "./NewNoteForm.module.scss";
 import { BiEraser } from 'react-icons/bi';
 import { BsCheckCircle } from 'react-icons/bs';
-import { NoteContext } from "../../../contexts/NoteContext";
 
-function parseJwt(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
-}
 
 function NewNoteForm() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [type, setType] = useState("");
-    
-
-    /*const { keyId, setKeyId, CreateNote } = useContext(NoteContext);*/
 
     const handleCleanupClick = () => {
         setDescription("");
@@ -41,26 +28,18 @@ function NewNoteForm() {
 
         fetch('http://localhost:4000/api/notes', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`  },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify(noteData)
         })
             .then(response => {
-                if(response.status === 200){
+                if (response.status === 200) {
                     console.log('Note created')
-                }else{
+                } else {
                     console.log('Error')
                 }
             })
 
-        /*CreateNote({
-            id: setKeyId(keyId + 1),
-            title,
-            type,
-            description,
-        });
-        setTitle("");
-        setDescription("");
-        setType("");*/
+        window.location.reload();
     };
 
     return (
@@ -105,9 +84,5 @@ function NewNoteForm() {
         </section>
     )
 }
-
-
-
-
 
 export default NewNoteForm;

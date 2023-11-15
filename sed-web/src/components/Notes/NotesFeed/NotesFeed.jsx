@@ -1,11 +1,10 @@
 import SingleNote from '../SingleNote/SingleNote';
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { NoteContext } from '../../../contexts/NoteContext';
 import classes from "./NotesFeed.module.scss";
 
 function NotesFeed() {
     const { notes } = useContext(NoteContext);
-    console.log("dkj", notes);
 
     if (notes.length === 0) {
         return (
