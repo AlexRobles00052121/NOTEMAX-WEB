@@ -63,7 +63,7 @@ function NewNoteForm() {
                             <option value="draft">Reminders</option>
                             <option value="social">Social</option>
                             <option value="math">Math</option>
-                            <option value="science">Friends</option>
+                            <option value="friends">Science</option>
                         </select>
                         <textarea
                             className={classes["form-textarea"]}

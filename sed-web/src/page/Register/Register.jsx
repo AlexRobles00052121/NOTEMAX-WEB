@@ -6,9 +6,10 @@ import { useState } from 'react';
 export function Registrer() {
 
     const [name, setName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [user, setUser] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
 
@@ -16,9 +17,10 @@ export function Registrer() {
         e.preventDefault();
         const userData = {
             name: name,
-            lastName: lastName,
+            user: user,
             email: email,
-            phoneNumber: phoneNumber
+            phone_number: phoneNumber,
+            password: password
         }
 
         fetch('http://localhost:4000/api/users', {
@@ -44,7 +46,7 @@ export function Registrer() {
     return (
         <section className='login-registrer'>
             <div className='container-form' >
-                <form className='my-form'>
+                <form className='my-form' onSubmit={handleRegistrer}>
                     <h1 className='title-form'>NoteMax</h1>
                     <InputField
                         type="text"
@@ -60,11 +62,21 @@ export function Registrer() {
                     <InputField
                         type="text"
                         id="6"
-                        name="apellido"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        placeholder="Your last name...">
-                        Last name:
+                        name="user"
+                        value={user}
+                        onChange={(e) => setUser(e.target.value)}
+                        placeholder="Your user...">
+                        User:
+                    </InputField>
+
+                    <InputField
+                        type="password"
+                        id="6"
+                        name="user"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Your password...">
+                        Password:
                     </InputField>
 
                     <InputField
@@ -94,8 +106,6 @@ export function Registrer() {
                     id="9"
                     name="submit"
                     value="Register"
-                    onClick={handleRegistrer}
-
                 >
                 </InputField>
                 <p>Already have and acount?<Link className='navLogin' to="/">Iniciar sesion</Link></p>
