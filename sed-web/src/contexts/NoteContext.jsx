@@ -8,6 +8,7 @@ function NoteContextProvider(props) {
 
     const token = localStorage.getItem("token");
 
+
     useEffect(() => {
         if (token) {
             fetch("http://localhost:4000/api/notes", {
@@ -22,7 +23,7 @@ function NoteContextProvider(props) {
     }, [token, setNotes]);
 
     function CreateNote(note) {
-
+        
         setNotes([...notes, { id: keyId, title: note.title, type: note.type, description: note.description }])
 
         fetch("http://localhost:4000/api/notes", {
@@ -32,9 +33,9 @@ function NoteContextProvider(props) {
                 Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
-                title: note.title,
-                type: note.type,
-                description: note.description,
+                tittle: note.title,
+                categories: note.type,
+                content: note.description,
             }),
         })
             .then(response => {
@@ -49,6 +50,7 @@ function NoteContextProvider(props) {
             })
             .catch(error => {
                 console.error('Something went wrong:', error);
+                console.log(error);
             });
     }
 

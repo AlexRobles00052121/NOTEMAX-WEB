@@ -34,12 +34,12 @@ function NewNoteForm() {
             .then(response => {
                 if (response.status === 200) {
                     console.log('Note created')
+                    window.location.reload();
                 } else {
                     console.log('Error')
                 }
             })
 
-        window.location.reload();
     };
 
     return (

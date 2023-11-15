@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
 
-  const handleBeforeUnload = () => {
+  /*const handleBeforeUnload = () => {
     localStorage.removeItem('token');
   }
 
@@ -19,7 +19,7 @@ function App() {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, []);
+  }, []);*/
 
   return (
 
