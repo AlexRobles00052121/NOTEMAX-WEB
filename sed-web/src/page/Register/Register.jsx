@@ -71,7 +71,7 @@ export function Registrer() {
                     <InputField
                         type="password"
                         id="6"
-                        name="user"
+                        name="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Your password...">
