@@ -16,7 +16,7 @@ function NoteContextProvider(props) {
                 },
             })
                 .then((response) => response.json())
-                .then((data) => { console.log(data) })
+                .then((data) => setNotes(data))
                 .catch((error) => console.log(error));
         }
     }, [token, setNotes]);
@@ -24,11 +24,12 @@ function NoteContextProvider(props) {
     function CreateNote(note) {
 
         setNotes([...notes, { id: keyId, title: note.title, type: note.type, description: note.description }])
-        
+
         fetch("http://localhost:4000/api/notes", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
                 title: note.title,
@@ -36,32 +37,35 @@ function NoteContextProvider(props) {
                 description: note.description,
             }),
         })
-        .then(response => {
-            if(!response.ok){
-                throw new Error('Something went wrong')
-            }
-            return response.json()
-        })
-        .then(newNote => {
-            setNotes([...notes, newNote])
-        
-        })
-        .catch(error => {
-            console.error('Something went wrong:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Something went wrong')
+                }
+                return response.json()
+            })
+            .then(newNote => {
+                setNotes([...notes, newNote])
+
+            })
+            .catch(error => {
+                console.error('Something went wrong:', error);
+            });
     }
 
     function DeleteNote(id) {
         fetch(`http://localhost:4000/api/notes/${id}`, {
             method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
         })
-        .then(response => {
-            if(!response.ok){
-                throw new Error('Something went wrong')
-            }
-            setNotes(notes.filter(note => note.id !== id))
-        })
-        .catch
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Something went wrong')
+                }
+                setNotes(notes.filter(note => note.id !== id))
+            })
+            .catch
     }
 
     return (

@@ -9,10 +9,10 @@ function SingleNote({ note }) {
 
     return (
         <article className={classes["note"]}>
-            <div className={classes["div_note"]}>
-                <h3 className={classes["note__title"]}>{note.title}</h3>
-                <p className={classes["note__type"]}>{note.type}</p>
-                <p className={classes["note__description"]}>{note.description}</p>
+            <div className={classes["div_note"]} key={note.id}>
+                <h3 className={classes["note__title"]}>{note.tittle}</h3>
+                <p className={classes["note__type"]}>{note.categories}</p>
+                <p className={classes["note__description"]}>{note.content}</p>
                 <div className={classes["div_button"]}>
                     <button className={classes["note__button"]} onClick={() => DeleteNote(note.id)}>
                         Delete
