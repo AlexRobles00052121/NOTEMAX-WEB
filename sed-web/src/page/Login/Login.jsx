@@ -21,6 +21,9 @@ export function Login() {
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
+        if (!username || !password) {
+            alert("Por favor, complete todos los campos.");
+        }
 
         e.preventDefault();
         const userData = {
@@ -34,7 +37,7 @@ export function Login() {
             body: JSON.stringify(userData)
         })
             .then(response => response.json())
-            .then(result => { 
+            .then(result => {
                 if (result.token) {
                     //console.log(parseJwt(result.token))
                     localStorage.setItem('token', result.token)
@@ -42,16 +45,24 @@ export function Login() {
                     window.location.reload();
                     navigate('/principal')
                 } else {
-                    setloginSuccessful('false')
+                    if (result.message === "User not found") {
+                        alert("Error de autenticación: Datos invalidos");
+                    }
                     navigate('/')
                 }
 
-
             })
             .catch(error => {
-                console.log(error)
+                handleApiError(error);
+                //console.log("ete" +error)
             })
     };
+
+    const handleApiError = (error) => {
+
+        alert("Error en la solicitud. Por favor, inténtalo de nuevo más tarde.");
+
+    }
 
     return (
         <section className='login-registrer'>

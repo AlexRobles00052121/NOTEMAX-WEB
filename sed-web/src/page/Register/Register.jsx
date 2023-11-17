@@ -14,6 +14,10 @@ export function Registrer() {
     const navigate = useNavigate();
 
     const handleRegistrer = (e) => {
+        if (!name || !user || !email || !phoneNumber || !password) {
+            alert("Por favor, complete todos los campos.");
+            
+        }
         e.preventDefault();
         const userData = {
             name: name,
@@ -36,7 +40,7 @@ export function Registrer() {
                 }
             })
             .catch(error => {
-                // Manejar errores aquí
+
                 console.error(error);
             })
 
