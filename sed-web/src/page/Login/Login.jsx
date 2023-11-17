@@ -39,6 +39,7 @@ export function Login() {
                     //console.log(parseJwt(result.token))
                     localStorage.setItem('token', result.token)
                     setloginSuccessful('true')
+                    window.location.reload();
                     navigate('/principal')
                 } else {
                     setloginSuccessful('false')
