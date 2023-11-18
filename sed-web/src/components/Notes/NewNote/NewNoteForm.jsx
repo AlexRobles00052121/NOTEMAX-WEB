@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import classes from "./NewNoteForm.module.scss";
 import { BiEraser } from 'react-icons/bi';
 import { BsCheckCircle } from 'react-icons/bs';
+import { NoteContext } from "../../../contexts/NoteContext";
 
 
 function NewNoteForm() {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [type, setType] = useState("");
+    const [tittle, setTitle] = useState("");
+    const [content, setDescription] = useState("");
+    const [categories, setType] = useState("");
+    const noteContext = useContext(NoteContext);
+    const { CreateNote } = noteContext;
+
 
     const handleCleanupClick = () => {
         setDescription("");
@@ -15,32 +19,19 @@ function NewNoteForm() {
         setType("");
     }
 
-    const token = localStorage.getItem('token')
+    //const token = localStorage.getItem('token')
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const noteData = {
-            tittle: title,
-            content: description,
-            categories: type,
+            tittle: tittle,
+            content: content,
+            categories: categories,
         }
 
-        fetch('http://localhost:3000/api/notes', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify(noteData)
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    console.log('Note created')
-                    handleCleanupClick();
-                    window.location.reload();
-                } else {
-                    console.log('Error')
-                }
-            })
-
+        CreateNote(noteData);
+        handleCleanupClick();
     };
 
     return (
@@ -52,13 +43,13 @@ function NewNoteForm() {
                             className={classes["form-input"]}
                             placeholder="Write your title here..."
                             onChange={(e) => setTitle(e.target.value)}
-                            value={title}
+                            value={tittle}
                             required
                         />
                         <select
                             className={classes["note__select"]}
                             onChange={(e) => setType(e.target.value)}
-                            value={type}
+                            value={categories}
                             required>
                             <option value="" selected  > Select a type for your note</option>
                             <option value="draft">Drafts</option>
@@ -69,7 +60,7 @@ function NewNoteForm() {
                         <textarea
                             className={classes["form-textarea"]}
                             placeholder="Write your note here..."
-                            value={description}
+                            value={content}
                             onChange={(e) => setDescription(e.target.value)}
                             required
                         />

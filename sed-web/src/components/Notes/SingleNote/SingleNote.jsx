@@ -6,6 +6,7 @@ import { NoteContext } from '../../../contexts/NoteContext';
 
 function SingleNote({ note }) {
     const { DeleteNote } = useContext(NoteContext);
+    //console.log(note);
 
     return (
         <article className={classes["note"]}>

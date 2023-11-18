@@ -4,9 +4,9 @@ export const NoteContext = createContext();
 
 function NoteContextProvider(props) {
     const [notes, setNotes] = useState([]);
-    const [keyId, setKeyId] = useState(4)
-
+    //const [keyId, setKeyId] = useState(4);
     const token = localStorage.getItem("token");
+
 
 
     useEffect(() => {
@@ -17,40 +17,36 @@ function NoteContextProvider(props) {
                 },
             })
                 .then((response) => response.json())
-                .then((data) => setNotes(data))
+                .then((data) => {
+                    // Filtrar solo las notas con id
+                    const notesWithId = data.filter((note) => note.id);
+                    setNotes(notesWithId);
+                })
+
                 .catch((error) => console.log(error));
         }
     }, [token, setNotes]);
 
     function CreateNote(note) {
-        
-        setNotes([...notes, { id: keyId, title: note.title, type: note.type, description: note.description }])
-
         fetch("http://localhost:3000/api/notes", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({
-                tittle: note.title,
-                categories: note.type,
-                content: note.description,
-            }),
+            body: JSON.stringify(note),
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Something went wrong')
+                    throw new Error('Something went wrong');
                 }
-                return response.json()
+                return response.json();
             })
             .then(newNote => {
-                setNotes([...notes, newNote])
-
+                //setNotes([...notes, newNote]);
             })
             .catch(error => {
                 console.error('Something went wrong:', error);
-                console.log(error);
             });
     }
 
@@ -63,18 +59,18 @@ function NoteContextProvider(props) {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Something went wrong')
+                    throw new Error('Something went wrong');
                 }
-                setNotes(notes.filter(note => note.id !== id))
+                setNotes(notes.filter(note => note.id !== id));
             })
-            .catch
+            .catch(error => {
+                console.error('Something went wrong:', error);
+            });
     }
 
     return (
         <NoteContext.Provider
             value={{
-                keyId,
-                setKeyId,
                 notes,
                 CreateNote,
                 DeleteNote
@@ -83,7 +79,6 @@ function NoteContextProvider(props) {
             {props.children}
         </NoteContext.Provider>
     );
-
 }
 
-export default NoteContextProvider
+export default NoteContextProvider;
