@@ -34,6 +34,7 @@ function NewNoteForm() {
             .then(response => {
                 if (response.status === 200) {
                     console.log('Note created')
+                    handleCleanupClick();
                     window.location.reload();
                 } else {
                     console.log('Error')
@@ -60,10 +61,10 @@ function NewNoteForm() {
                             value={type}
                             required>
                             <option value="" selected  > Select a type for your note</option>
-                            <option value="draft">Reminders</option>
+                            <option value="draft">Drafts</option>
                             <option value="social">Social</option>
                             <option value="math">Math</option>
-                            <option value="friends">Science</option>
+                            <option value="friends">Friends</option>
                         </select>
                         <textarea
                             className={classes["form-textarea"]}
@@ -75,7 +76,7 @@ function NewNoteForm() {
 
                         <div className={classes["Bottons"]}>
                             <button type="button" className={classes["ButtonD"]} onClick={handleCleanupClick}>  Cleanup <BiEraser /></button>
-                            <button type="submit" className={classes["ButtonC"]} >  Save <BsCheckCircle /></button>
+                            <button type="submit" className={classes["ButtonC"]}>  Save <BsCheckCircle /></button>
                         </div>
 
                     </form>
