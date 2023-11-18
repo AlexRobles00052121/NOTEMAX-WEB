@@ -9,23 +9,26 @@ function NoteContextProvider(props) {
 
 
 
-    useEffect(() => {
+    const fetchNotes = () => {
         if (token) {
-            fetch("http://localhost:3000/api/notes", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+          fetch("http://localhost:3000/api/notes", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Filtrar solo las notas con id
+              const notesWithId = data.filter((note) => note.id);
+              setNotes(notesWithId);
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    // Filtrar solo las notas con id
-                    const notesWithId = data.filter((note) => note.id);
-                    setNotes(notesWithId);
-                })
-
-                .catch((error) => console.log(error));
+            .catch((error) => console.log(error));
         }
-    }, [token, setNotes]);
+      };
+    
+      useEffect(() => {
+        fetchNotes(); // Llamada inicial al cargar el componente
+      }, [token]);
 
     function CreateNote(note) {
         fetch("http://localhost:3000/api/notes", {
@@ -43,7 +46,7 @@ function NoteContextProvider(props) {
                 return response.json();
             })
             .then(newNote => {
-                //setNotes([...notes, newNote]);
+                fetchNotes();
             })
             .catch(error => {
                 console.error('Something went wrong:', error);
