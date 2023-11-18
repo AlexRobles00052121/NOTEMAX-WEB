@@ -26,7 +26,7 @@ function NewNoteForm() {
             categories: type,
         }
 
-        fetch('http://localhost:4000/api/notes', {
+        fetch('http://localhost:3000/api/notes', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
             body: JSON.stringify(noteData)

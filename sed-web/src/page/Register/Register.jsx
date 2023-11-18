@@ -13,12 +13,13 @@ export function Registrer() {
 
     const navigate = useNavigate();
 
-    const handleRegistrer = (e) => {
+    const handleRegistrer = async (e) => {
+        e.preventDefault();
+
         if (!name || !user || !email || !phoneNumber || !password) {
             alert("Por favor, complete todos los campos.");
 
         }
-        e.preventDefault();
         const userData = {
             name: name,
             user: user,
@@ -26,23 +27,22 @@ export function Registrer() {
             phone_number: phoneNumber,
             password: password
         }
+        try {
+            const response = await fetch('http://localhost:3000/api/users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData)
+            });
 
-        fetch('http://localhost:4000/api/users', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userData)
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    navigate('/')
-                } else {
-                    navigate('/registrer')
-                }
-            })
-            .catch(error => {
-
-                console.error(error);
-            })
+            if (response.status === 200) {
+                navigate('/');
+            } else {
+                navigate('/registrer');
+            }
+        } catch (error) {
+            console.error(error);
+            // Muestra un mensaje de error al usuario en la interfaz si es necesario.
+        }
 
     }
 
@@ -95,7 +95,7 @@ export function Registrer() {
                         value={password}
                         onChange={(e) => {
                             const inputValue = e.target.value;
-                            const allowedCharacters = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]+$/;
+                            const allowedCharacters = /^[a-zA-Z0-9!@#$%^&*()_+{}[\]:;<>,.?~\\/-]+$/;
 
                             if (allowedCharacters.test(inputValue) || inputValue === '') {
                                 setPassword(inputValue);
