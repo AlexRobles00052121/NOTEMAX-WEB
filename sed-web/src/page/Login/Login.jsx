@@ -7,32 +7,33 @@ export function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loginSuccessful ,setloginSuccessful] = useState(false);
+    const [loginSuccessful, setloginSuccessful] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
         e.preventDefault();
-    
+
         if (!username || !password) {
             alert("Por favor, complete todos los campos.");
             return;
         }
-    
+
         fetch('http://localhost:3000/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user: username, password })
         })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
+                if (response.ok) {
+                    return response.json();
                 }
-                return response.json();
+                throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
             })
+
             .then(result => handleLoginSuccess(result))
             .catch(error => handleApiError(error));
     };
-    
+
     const handleLoginSuccess = (result) => {
         if (result.token) {
             localStorage.setItem('token', result.token);
@@ -40,18 +41,16 @@ export function Login() {
             window.location.reload();
             navigate('/principal');
         } else {
-            if (result.message === "User not found") {
-                alert("Error de autenticación: Datos inválidos");
-            }
+
             navigate('/');
         }
     };
-    
+
     const handleApiError = (error) => {
-        console.error("Error en la solicitud:", error);
-        alert("Error en la solicitud. Por favor, inténtalo de nuevo más tarde.");
+        //console.error("Error en la solicitud:", error.message);
+        alert("Autentication invalid");
     };
-    
+
 
     return (
         <section className='login-registrer'>
