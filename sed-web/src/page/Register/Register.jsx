@@ -16,7 +16,7 @@ export function Registrer() {
     const handleRegistrer = (e) => {
         if (!name || !user || !email || !phoneNumber || !password) {
             alert("Por favor, complete todos los campos.");
-            
+
         }
         e.preventDefault();
         const userData = {
@@ -56,29 +56,52 @@ export function Registrer() {
                         id="5"
                         name="nombre"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => {
+                            const inputValue = e.target.value;
+                            const onlyLetters = /^[a-zA-Z]+$/;
+
+                            if (onlyLetters.test(inputValue) || inputValue === '') {
+                                setName(inputValue);
+                            }
+                        }}
                         placeholder="Your name..."
                     >
                         Name:
                     </InputField>
-
                     <InputField
                         type="text"
                         id="6"
                         name="user"
                         value={user}
-                        onChange={(e) => setUser(e.target.value)}
-                        placeholder="Your user...">
+                        onChange={(e) => {
+                            const inputValue = e.target.value;
+                            const onlyLettersAndHyphens = /^[a-zA-Z-]+$/;
+
+                            if (onlyLettersAndHyphens.test(inputValue) || inputValue === '') {
+                                setUser(inputValue);
+                            }
+                        }}
+                        placeholder="Your user..."
+                    >
                         User:
                     </InputField>
 
+
                     <InputField
                         type="password"
-                        id="6"
-                        name="password"
+                        id="2"
+                        name="Password"
+                        placeholder="Your Password..."
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Your password...">
+                        onChange={(e) => {
+                            const inputValue = e.target.value;
+                            const allowedCharacters = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]+$/;
+
+                            if (allowedCharacters.test(inputValue) || inputValue === '') {
+                                setPassword(inputValue);
+                            }
+                        }}
+                    >
                         Password:
                     </InputField>
 
@@ -93,15 +116,27 @@ export function Registrer() {
                         Email:
                     </InputField>
 
+
+
                     <InputField
                         type="tel"
                         id="8"
                         name="phone"
                         value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                        placeholder="Your phone number...">
-                        Phone number
+                        onChange={(e) => {
+                            const inputValue = e.target.value;
+
+                            if (/^\d*$/.test(inputValue) && inputValue.length <= 8) {
+                                setPhoneNumber(inputValue);
+                            }
+                        }}
+                        placeholder="Your phone number..."
+                    >
+                        Phone number:
                     </InputField>
+
+
+
 
                     <InputField
                         type="submit"

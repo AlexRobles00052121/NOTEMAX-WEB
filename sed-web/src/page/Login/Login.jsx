@@ -75,7 +75,14 @@ export function Login() {
                         name="Username"
                         placeholder="Your Username..."
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(e) => {
+                            const inputValue = e.target.value;
+                            const onlyLetters = /^[a-zA-Z]+$/;
+
+                            if (onlyLetters.test(inputValue) || inputValue === '') {
+                                setUsername(inputValue);
+                            }
+                        }}
                     >
                         Username:
                     </InputField>
@@ -86,8 +93,14 @@ export function Login() {
                         name="Password"
                         placeholder="Your Password..."
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => {
+                            const inputValue = e.target.value;
+                            const allowedCharacters = /^[a-zA-Z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]+$/;
 
+                            if (allowedCharacters.test(inputValue) || inputValue === '') {
+                                setPassword(inputValue);
+                            }
+                        }}
                     >
                         Password:
                     </InputField>
