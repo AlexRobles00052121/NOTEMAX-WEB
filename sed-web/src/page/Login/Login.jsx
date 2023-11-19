@@ -7,19 +7,50 @@ export function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [loginSuccessful, setloginSuccessful] = useState(false);
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-        if (username === 'user' && password === 'password') {
-            const userData={
-                name : username,
-                password : password
-            }
-            localStorage.setItem('user', JSON.stringify(userData));
-            
+    const handleLogin = (e) => {
+        e.preventDefault();
+
+        if (!username || !password) {
+            alert("Por favor, complete todos los campos.");
+            return;
+        }
+
+        fetch('http://localhost:3000/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user: username, password })
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
+            })
+
+            .then(result => handleLoginSuccess(result))
+            .catch(error => handleApiError(error));
+    };
+
+    const handleLoginSuccess = (result) => {
+        if (result.token) {
+            localStorage.setItem('token', result.token);
+            setloginSuccessful('true');
+            window.location.reload();
             navigate('/principal');
+        } else {
+
+            navigate('/');
         }
     };
+
+    const handleApiError = (error) => {
+        //console.error("Error en la solicitud:", error.message);
+        alert("Autentication invalid");
+    };
+
 
     return (
         <section className='login-registrer'>
@@ -32,7 +63,14 @@ export function Login() {
                         name="Username"
                         placeholder="Your Username..."
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(e) => {
+                            const inputValue = e.target.value;
+                            const onlyLetters = /^[a-zA-Z]+$/;
+
+                            if (onlyLetters.test(inputValue) || inputValue === '') {
+                                setUsername(inputValue);
+                            }
+                        }}
                     >
                         Username:
                     </InputField>
@@ -43,8 +81,14 @@ export function Login() {
                         name="Password"
                         placeholder="Your Password..."
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => {
+                            const inputValue = e.target.value;
+                            const allowedCharacters = /^[a-zA-Z0-9!@#$%^&*()_+{}[\]:;<>,.?~\\/-]+$/;
 
+                            if (allowedCharacters.test(inputValue) || inputValue === '') {
+                                setPassword(inputValue);
+                            }
+                        }}
                     >
                         Password:
                     </InputField>

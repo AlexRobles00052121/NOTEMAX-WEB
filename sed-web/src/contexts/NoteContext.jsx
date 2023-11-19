@@ -1,37 +1,79 @@
 import { createContext, useEffect, useState } from "react";
-import { notes as data } from '../data/notes';
 
 export const NoteContext = createContext();
 
 function NoteContextProvider(props) {
     const [notes, setNotes] = useState([]);
-    const [keyId, setKeyId] = useState(4)
+    //const [keyId, setKeyId] = useState(4);
+    const token = localStorage.getItem("token");
+
+
+
+    const fetchNotes = () => {
+        if (token) {
+          fetch("http://localhost:3000/api/notes", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Filtrar solo las notas con id
+              const notesWithId = data.filter((note) => note.id);
+              setNotes(notesWithId);
+            })
+            .catch((error) => console.log(error));
+        }
+      };
+    
+      useEffect(() => {
+        fetchNotes(); // Llamada inicial al cargar el componente
+      }, [token]);
 
     function CreateNote(note) {
-        setNotes([
-            ...notes,
-            {
-                id: keyId,
-                title: note.title,
-                type: note.type,
-                description: note.description,
+        fetch("http://localhost:3000/api/notes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
-        ]);
+            body: JSON.stringify(note),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Something went wrong');
+                }
+                return response.json();
+            })
+            .then(newNote => {
+                fetchNotes();
+            })
+            .catch(error => {
+                console.error('Something went wrong:', error);
+            });
     }
 
-    useEffect(() => {
-        setNotes(data);
-    }, []);
-
     function DeleteNote(id) {
-        setNotes(notes.filter((note) => note.id !== id));
+        fetch(`http://localhost:3000/api/notes/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Something went wrong');
+                }
+                setNotes(notes.filter(note => note.id !== id));
+            })
+            .catch(error => {
+                console.error('Something went wrong:', error);
+            });
     }
 
     return (
         <NoteContext.Provider
             value={{
-                keyId,
-                setKeyId,
                 notes,
                 CreateNote,
                 DeleteNote
@@ -40,7 +82,6 @@ function NoteContextProvider(props) {
             {props.children}
         </NoteContext.Provider>
     );
-
 }
 
-export default NoteContextProvider
+export default NoteContextProvider;

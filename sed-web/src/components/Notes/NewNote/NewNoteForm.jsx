@@ -4,12 +4,14 @@ import { BiEraser } from 'react-icons/bi';
 import { BsCheckCircle } from 'react-icons/bs';
 import { NoteContext } from "../../../contexts/NoteContext";
 
-function NewNoteForm() {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [type, setType] = useState("");
 
-    const { keyId, setKeyId, CreateNote } = useContext(NoteContext);
+function NewNoteForm() {
+    const [tittle, setTitle] = useState("");
+    const [content, setDescription] = useState("");
+    const [categories, setType] = useState("");
+    const noteContext = useContext(NoteContext);
+    const { CreateNote } = noteContext;
+
 
     const handleCleanupClick = () => {
         setDescription("");
@@ -17,17 +19,19 @@ function NewNoteForm() {
         setType("");
     }
 
+    //const token = localStorage.getItem('token')
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        CreateNote({
-            id: setKeyId(keyId + 1),
-            title,
-            type,
-            description,
-        });
-        setTitle("");
-        setDescription("");
-        setType("");
+
+        const noteData = {
+            tittle: tittle,
+            content: content,
+            categories: categories,
+        }
+
+        CreateNote(noteData);
+        handleCleanupClick();
     };
 
     return (
@@ -39,29 +43,31 @@ function NewNoteForm() {
                             className={classes["form-input"]}
                             placeholder="Write your title here..."
                             onChange={(e) => setTitle(e.target.value)}
-                            value={title}
+                            value={tittle}
                             required
                         />
                         <select
                             className={classes["note__select"]}
                             onChange={(e) => setType(e.target.value)}
-                            value={type}>
-                            <option defaultValue="" selected  > Select a type for your note</option>
-                            <option defaultValue="value1">Reminders</option>
-                            <option defaultValue="value2">Social</option>
-                            <option defaultValue="value3">Math</option>
-                            <option defaultValue="value4">Science</option>
+                            value={categories}
+                            required>
+                            <option value="" selected  > Select a type for your note</option>
+                            <option value="draft">Drafts</option>
+                            <option value="social">Social</option>
+                            <option value="math">Math</option>
+                            <option value="friends">Friends</option>
                         </select>
                         <textarea
                             className={classes["form-textarea"]}
                             placeholder="Write your note here..."
-                            value={description}
+                            value={content}
                             onChange={(e) => setDescription(e.target.value)}
+                            required
                         />
 
                         <div className={classes["Bottons"]}>
                             <button type="button" className={classes["ButtonD"]} onClick={handleCleanupClick}>  Cleanup <BiEraser /></button>
-                            <button type="submit" className={classes["ButtonC"]} >  Save <BsCheckCircle /></button>
+                            <button type="submit" className={classes["ButtonC"]}>  Save <BsCheckCircle /></button>
                         </div>
 
                     </form>
@@ -70,9 +76,5 @@ function NewNoteForm() {
         </section>
     )
 }
-
-
-
-
 
 export default NewNoteForm;
