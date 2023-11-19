@@ -11,7 +11,7 @@ function NoteContextProvider(props) {
 
     const fetchNotes = () => {
         if (token) {
-          fetch("http://localhost:3000/api/notes", {
+          fetch("http://localhost:3001/api/notes", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -31,7 +31,7 @@ function NoteContextProvider(props) {
       }, [token]);
 
     function CreateNote(note) {
-        fetch("http://localhost:3000/api/notes", {
+        fetch("http://localhost:3001/api/notes", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -54,7 +54,7 @@ function NoteContextProvider(props) {
     }
 
     function DeleteNote(id) {
-        fetch(`http://localhost:3000/api/notes/${id}`, {
+        fetch(`http://localhost:3001/api/notes/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
