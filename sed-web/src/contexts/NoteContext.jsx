@@ -11,24 +11,24 @@ function NoteContextProvider(props) {
 
     const fetchNotes = () => {
         if (token) {
-          fetch("http://172.16.48.128/api/notes", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              // Filtrar solo las notas con id
-              const notesWithId = data.filter((note) => note.id);
-              setNotes(notesWithId);
+            fetch("http://172.16.48.128/api/notes", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             })
-            .catch((error) => console.log(error));
+                .then((response) => response.json())
+                .then((data) => {
+                    // Filtrar solo las notas con id
+                    const notesWithId = data.filter((note) => note.id);
+                    setNotes(notesWithId);
+                })
+                .catch((error) => console.log(error));
         }
-      };
-    
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         fetchNotes(); // Llamada inicial al cargar el componente
-      }, [token]);
+    }, [token]);
 
     function CreateNote(note) {
         fetch("http://172.16.48.128/api/notes", {
