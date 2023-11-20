@@ -8,8 +8,7 @@ function UserFeed() {
     const [loading, setLoading] = useState(true);
     const token = localStorage.getItem("token");
     const [showNotes, setShowNotes] = useState(false);
-
-
+    const [selectedRoles, setSelectedRoles] = useState({}); // Use an object to store selected roles
 
     const isAdmin = () => {
         try {
@@ -33,7 +32,7 @@ function UserFeed() {
 
     useEffect(() => {
         if (isAdmin() || isSuperAdmin()) {
-            fetch("http://172.16.48.128/api/users", {
+            fetch("http://localhost:3000/api/users", {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -55,7 +54,7 @@ function UserFeed() {
 
     useEffect(() => {
         if (isAdmin() || isSuperAdmin()) {
-            fetch("http://172.16.48.128/api/ad/notes", {
+            fetch("http://localhost:3000/api/ad/notes", {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -75,9 +74,8 @@ function UserFeed() {
         }
     }, [notes, setNotes]);
 
-
     const DeleteUser = (userId) => {
-        fetch(`http://172.16.48.128/api/users?id=${userId}`, {
+        fetch(`http://localhost:3000/api/users?id=${userId}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -85,7 +83,9 @@ function UserFeed() {
         })
             .then((response) => {
                 if (response.ok) {
-                    setUser((prevUser) => prevUser.filter((user) => user.id !== userId));
+                    setUser((prevUser) =>
+                        prevUser.filter((user) => user.id !== userId)
+                    );
                 } else {
                     console.error("Error deleting user:", response.statusText);
                 }
@@ -95,21 +95,46 @@ function UserFeed() {
             });
     };
 
+    const changeRole = (userId, newRole) => {
+        fetch(`http://localhost:3000/api/users/${userId}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ role: newRole }),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    setUser((prevUsers) =>
+                        prevUsers.map((user) =>
+                            user.id === userId ? { ...user, role: newRole } : user
+                        )
+                    );
+                } else {
+                    console.error("Error changing role:", response.statusText);
+                }
+            })
+            .catch((error) => {
+                console.error("Error changing role:", error);
+            });
+    };
+
     function DeleteNote(id) {
-        fetch(`http://172.16.48.128/api/notes/${id}`, {
+        fetch(`http://localhost:3000/api/notes/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         })
-            .then(response => {
+            .then((response) => {
                 if (!response.ok) {
-                    throw new Error('Something went wrong');
+                    throw new Error("Something went wrong");
                 }
-                setNotes(notes.filter(note => note.id !== id));
+                setNotes(notes.filter((note) => note.id !== id));
             })
-            .catch(error => {
-                console.error('Something went wrong:', error);
+            .catch((error) => {
+                console.error("Something went wrong:", error);
             });
     }
 
@@ -126,42 +151,50 @@ function UserFeed() {
             <div>
                 <section className={classes["notes-feed"]}>
                     <h2 className={classes["notes-feed__title"]}>Users...</h2>
-                    {user && user.map((userData) => (
-                        <article className={classes["note"]} key={userData.id}>
-                            {/* Render user details here */}
-                            <div className={classes["div_note"]}>
-                                <h3 className={classes["note__title"]}>{userData.user}</h3>
-                                <p className={classes["note__type"]}>{userData.role}</p>
-                                <p className={classes["note__description"]}>{userData.email}</p>
-                                <div className={classes["div_button"]}>
-                                    <button
-                                        className={classes["note__button"]}
-                                        onClick={() => DeleteUser(userData.id)}
-                                    >
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
-                        </article>
-                    ))}
-                </section>
-
-                <button onClick={toggleNotesVisibility}>Toggle Notes</button>
-
-                {showNotes &&
-                    <section className={classes["notes-feed"]}>
-                        <h2 className={classes["notes-feed__title"]}>Notes...</h2>
-                        {notes && notes.map((notesData) => (
-                            <article className={classes["note"]} key={notesData.id}>
-                                {/* Render user details here */}
+                    {user &&
+                        user.map((userData) => (
+                            <article
+                                className={classes["note"]}
+                                key={userData.id}
+                            >
                                 <div className={classes["div_note"]}>
-                                    <h3 className={classes["note__title"]}>{notesData.tittle}</h3>
-                                    <p className={classes["note__type"]}>{notesData.categories}</p>
-                                    <p className={classes["note__description"]}>{notesData.content}</p>
+                                    <h3 className={classes["note__title"]}>{userData.user}</h3>
+                                    <p className={classes["note__type"]}>{userData.role}</p>
+                                    <p className={classes["note__description"]}>{userData.email}</p>
+
+                                    {isSuperAdmin() && (
+                                        <>
+                                            <select
+                                                value={selectedRoles[userData.id] || ""}
+                                                onChange={(e) => {
+                                                    const newRole = e.target.value;
+                                                    setSelectedRoles((prevRoles) => ({
+                                                        ...prevRoles,
+                                                        [userData.id]: newRole,
+                                                    }));
+                                                }}
+                                            >
+                                                <option value="">Select Role</option>
+                                                <option value="admin">Admin</option>
+                                                <option value="user">User</option>
+                                                <option value="superAdmin">Super Admin</option>
+                                            </select>
+
+                                            <div className={classes["div_button"]}>
+                                                <button
+                                                    className={classes["note__button"]}
+                                                    onClick={() => changeRole(userData.id, selectedRoles[userData.id])}
+                                                >
+                                                    Change Role
+                                                </button>
+                                            </div>
+                                        </>
+                                    )}
+
                                     <div className={classes["div_button"]}>
                                         <button
                                             className={classes["note__button"]}
-                                            onClick={() => DeleteNote(notesData.id)}
+                                            onClick={() => DeleteUser(userData.id)}
                                         >
                                             Delete
                                         </button>
@@ -169,7 +202,33 @@ function UserFeed() {
                                 </div>
                             </article>
                         ))}
-                    </section>} {/* Render the NotesComponent if showNotes is true */}
+                </section>
+
+                <button onClick={toggleNotesVisibility}>Toggle Notes</button>
+
+                {showNotes && (
+                    <section className={classes["notes-feed"]}>
+                        <h2 className={classes["notes-feed__title"]}>Notes...</h2>
+                        {notes &&
+                            notes.map((notesData) => (
+                                <article className={classes["note"]} key={notesData.id}>
+                                    <div className={classes["div_note"]}>
+                                        <h3 className={classes["note__title"]}>{notesData.tittle}</h3>
+                                        <p className={classes["note__type"]}>{notesData.categories}</p>
+                                        <p className={classes["note__description"]}>{notesData.content}</p>
+                                        <div className={classes["div_button"]}>
+                                            <button
+                                                className={classes["note__button"]}
+                                                onClick={() => DeleteNote(notesData.id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </article>
+                            ))}
+                    </section>
+                )}
             </div>
         );
     } else {

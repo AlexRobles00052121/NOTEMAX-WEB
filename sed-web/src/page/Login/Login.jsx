@@ -48,7 +48,7 @@ export function Login() {
 
     const handleApiError = (error) => {
         //console.error("Error en la solicitud:", error.message);
-        alert("Autentication invalid");
+        alert("Autentication invalid", error);
     };
 
 
