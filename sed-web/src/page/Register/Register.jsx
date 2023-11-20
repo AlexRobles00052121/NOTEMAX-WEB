@@ -28,7 +28,7 @@ export function Registrer() {
             password: password
         }
         try {
-            const response = await fetch('http://172.16.48.128/api/users', {
+            const response = await fetch('http://192.168.43.40/api/users', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userData)

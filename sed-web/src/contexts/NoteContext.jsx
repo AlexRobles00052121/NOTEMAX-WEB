@@ -11,7 +11,7 @@ function NoteContextProvider(props) {
 
     const fetchNotes = () => {
         if (token) {
-            fetch("http://172.16.48.128/api/notes", {
+            fetch("http://192.168.43.40/api/notes", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -31,7 +31,7 @@ function NoteContextProvider(props) {
     }, [token]);
 
     function CreateNote(note) {
-        fetch("http://172.16.48.128/api/notes", {
+        fetch("http://192.168.43.40/api/notes", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -54,7 +54,7 @@ function NoteContextProvider(props) {
     }
 
     function DeleteNote(id) {
-        fetch(`http://172.16.48.128/api/notes/${id}`, {
+        fetch(`http://192.168.43.40/api/notes/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,

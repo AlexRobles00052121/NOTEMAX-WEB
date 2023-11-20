@@ -18,7 +18,7 @@ export function Login() {
             return;
         }
 
-        fetch('http://172.16.48.128/api/login', {
+        fetch('http://192.168.43.40/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user: username, password })
