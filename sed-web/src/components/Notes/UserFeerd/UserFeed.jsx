@@ -32,7 +32,7 @@ function UserFeed() {
 
     useEffect(() => {
         if (isAdmin() || isSuperAdmin()) {
-            fetch("http://localhost:3000/api/users", {
+            fetch("http://172.16.48.128/api/users", {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ function UserFeed() {
 
     useEffect(() => {
         if (isAdmin() || isSuperAdmin()) {
-            fetch("http://localhost:3000/api/ad/notes", {
+            fetch("http://172.16.48.128/api/ad/notes", {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -75,7 +75,7 @@ function UserFeed() {
     }, [notes, setNotes]);
 
     const DeleteUser = (userId) => {
-        fetch(`http://localhost:3000/api/users?id=${userId}`, {
+        fetch(`http://172.16.48.128/api/users?id=${userId}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -96,7 +96,7 @@ function UserFeed() {
     };
 
     const changeRole = (userId, newRole) => {
-        fetch(`http://localhost:3000/api/users/${userId}`, {
+        fetch(`http://172.16.48.128/api/users/${userId}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -121,7 +121,7 @@ function UserFeed() {
     };
 
     function DeleteNote(id) {
-        fetch(`http://localhost:3000/api/notes/${id}`, {
+        fetch(`http://172.16.48.128/api/notes/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`,
